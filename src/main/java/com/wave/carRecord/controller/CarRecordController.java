@@ -1,0 +1,45 @@
+package com.wave.carRecord.controller;
+
+import com.alibaba.fastjson.JSON;
+import com.wave.carRecord.common.*;
+import com.wave.carRecord.service.GaterecordService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * @author mintc
+ * @projectName car-record
+ * @description: 车辆记录
+ * @date 2019/10/2016:31
+ */
+@RestController
+@RequestMapping("car")
+public class CarRecordController {
+    
+    @Autowired
+    GaterecordService gaterecordService;
+    
+    @RequestMapping(value = "queryCarRecord", method = RequestMethod.POST)
+    public ObjectResult<GaterecordResponse> queryCarRecord (@RequestBody QueryRequest req) {
+        System.out.println("car record params: " + JSON.toJSONString(req));
+        ObjectResult<GaterecordResponse> result = null;
+        try{
+            result = gaterecordService.queryCarRecord(req);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    
+    @PostMapping("excel")
+    public void excel(@RequestBody QueryRequest queryRequest, HttpServletResponse response) throws Exception {
+        System.out.println("car/excel params:" + JSON.toJSONString(queryRequest));
+        gaterecordService.exportCarRecordExcel(queryRequest, response);
+    }
+}

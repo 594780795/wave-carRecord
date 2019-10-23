@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wave.carRecord.dao.uts.ViewBpmFata28Mapper" >
+  <resultMap id="BaseResultMap" type="com.wave.carRecord.bean.uts.ViewBpmFata28" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="run_id" property="run_id" jdbcType="INTEGER" />
+    <result column="run_name" property="run_name" jdbcType="VARCHAR" />
+    <result column="begin_user" property="begin_user" jdbcType="VARCHAR" />
+    <result column="begin_time" property="begin_time" jdbcType="TIMESTAMP" />
+    <result column="flow_auto_num" property="flow_auto_num" jdbcType="INTEGER" />
+    <result column="flow_auto_num_year" property="flow_auto_num_year" jdbcType="INTEGER" />
+    <result column="flow_auto_num_month" property="flow_auto_num_month" jdbcType="INTEGER" />
+    <result column="data_m657" property="data_m657" jdbcType="VARCHAR" />
+    <result column="data_m658" property="data_m658" jdbcType="VARCHAR" />
+    <result column="data_m659" property="data_m659" jdbcType="VARCHAR" />
+    <result column="data_m660" property="data_m660" jdbcType="VARCHAR" />
+    <result column="data_m661" property="data_m661" jdbcType="VARCHAR" />
+    <result column="data_m662" property="data_m662" jdbcType="VARCHAR" />
+    <result column="data_m663" property="data_m663" jdbcType="VARCHAR" />
+    <result column="data_m664" property="data_m664" jdbcType="VARCHAR" />
+    <result column="data_m665" property="data_m665" jdbcType="VARCHAR" />
+    <result column="data_m666" property="data_m666" jdbcType="VARCHAR" />
+    <result column="data_m667" property="data_m667" jdbcType="VARCHAR" />
+    <result column="data_m668" property="data_m668" jdbcType="VARCHAR" />
+    <result column="data_m669" property="data_m669" jdbcType="VARCHAR" />
+    <result column="data_m670" property="data_m670" jdbcType="VARCHAR" />
+    <result column="data_m671" property="data_m671" jdbcType="VARCHAR" />
+    <result column="data_m672" property="data_m672" jdbcType="VARCHAR" />
+    <result column="data_m673" property="data_m673" jdbcType="VARCHAR" />
+    <result column="data_m674" property="data_m674" jdbcType="VARCHAR" />
+    <result column="data_m678" property="data_m678" jdbcType="VARCHAR" />
+    <result column="data_m679" property="data_m679" jdbcType="VARCHAR" />
+    <result column="data_m680" property="data_m680" jdbcType="VARCHAR" />
+    <result column="data_m682" property="data_m682" jdbcType="VARCHAR" />
+    <result column="data_m683" property="data_m683" jdbcType="VARCHAR" />
+    <result column="data_m685" property="data_m685" jdbcType="TIMESTAMP" />
+    <result column="data_m686" property="data_m686" jdbcType="TIMESTAMP" />
+    <result column="data_m687" property="data_m687" jdbcType="VARCHAR" />
+    <result column="data_m688" property="data_m688" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.wave.carRecord.bean.uts.ViewBpmFata28" extends="BaseResultMap" >
+    <result column="data_m684" property="data_m684" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Blob_Column_List" >
+    data_m684
+  </sql>
+  <sql id="Base_Column_List" >
+      id, run_id, run_name, 
+      begin_user, begin_time, flow_auto_num, 
+      flow_auto_num_year, flow_auto_num_month, 
+      data_m657, data_m658, data_m659, 
+      data_m660, data_m661, data_m662, 
+      data_m663, data_m664, data_m665, 
+      data_m666, data_m667, data_m668, 
+      data_m669, data_m670, data_m671, 
+      data_m672, data_m673, data_m674, 
+      data_m678, data_m679, data_m680, 
+      data_m682, data_m683, data_m685, 
+      data_m686, data_m687, data_m688, 
+      data_m684
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from view_bpm_data_28
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectSelective" resultMap="BaseResultMap" parameterType="com.wave.carRecord.common.ViewBpmFata28QueryDTO" >
+    select
+    <include refid="Base_Column_List" />
+    from view_bpm_data_28
+    <where>
+      <if test="id != null" >
+        and id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="run_id != null" >
+        and run_id = #{run_id,jdbcType=INTEGER},
+      </if>
+      <if test="run_name != null" >
+        and run_name = #{run_name,jdbcType=VARCHAR}
+      </if>
+      <if test="begin_user != null" >
+        and begin_user = #{begin_user,jdbcType=VARCHAR}
+      </if>
+      <if test="begin_time != null" >
+        and begin_time = #{begin_time,jdbcType=TIMESTAMP}
+      </if>
+      <if test="flow_auto_num != null" >
+        and flow_auto_num = #{flow_auto_num,jdbcType=INTEGER}
+      </if>
+      <if test="flow_auto_num_year != null" >
+        and flow_auto_num_year = #{flow_auto_num_year,jdbcType=INTEGER}
+      </if>
+      <if test="flow_auto_num_month != null" >
+        and flow_auto_num_month = #{flow_auto_num_month,jdbcType=INTEGER}
+      </if>
+      <if test="data_m664 != null" >
+        and data_m664 = #{data_m664,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="timestamp != null" >
+          and data_m685 <![CDATA[<=]]> #{timestamp,jdbcType=TIMESTAMP} and data_m686 <![CDATA[>=]]> #{timestamp,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </select>
+  <insert id="insert" parameterType="com.wave.carRecord.bean.uts.ViewBpmFata28" >
+    insert into view_bpm_data_28 (id, run_id, run_name, 
+      begin_user, begin_time, flow_auto_num, 
+      flow_auto_num_year, flow_auto_num_month, 
+      data_m657, data_m658, data_m659, 
+      data_m660, data_m661, data_m662, 
+      data_m663, data_m664, data_m665, 
+      data_m666, data_m667, data_m668, 
+      data_m669, data_m670, data_m671, 
+      data_m672, data_m673, data_m674, 
+      data_m678, data_m679, data_m680, 
+      data_m682, data_m683, data_m685, 
+      data_m686, data_m687, data_m688, 
+      data_m684)
+    values (#{id,jdbcType=INTEGER}, #{run_id,jdbcType=INTEGER}, #{run_name,jdbcType=VARCHAR}, 
+      #{begin_user,jdbcType=VARCHAR}, #{begin_time,jdbcType=TIMESTAMP}, #{flow_auto_num,jdbcType=INTEGER}, 
+      #{flow_auto_num_year,jdbcType=INTEGER}, #{flow_auto_num_month,jdbcType=INTEGER}, 
+      #{data_m657,jdbcType=VARCHAR}, #{data_m658,jdbcType=VARCHAR}, #{data_m659,jdbcType=VARCHAR}, 
+      #{data_m660,jdbcType=VARCHAR}, #{data_m661,jdbcType=VARCHAR}, #{data_m662,jdbcType=VARCHAR}, 
+      #{data_m663,jdbcType=VARCHAR}, #{data_m664,jdbcType=VARCHAR}, #{data_m665,jdbcType=VARCHAR}, 
+      #{data_m666,jdbcType=VARCHAR}, #{data_m667,jdbcType=VARCHAR}, #{data_m668,jdbcType=VARCHAR}, 
+      #{data_m669,jdbcType=VARCHAR}, #{data_m670,jdbcType=VARCHAR}, #{data_m671,jdbcType=VARCHAR}, 
+      #{data_m672,jdbcType=VARCHAR}, #{data_m673,jdbcType=VARCHAR}, #{data_m674,jdbcType=VARCHAR}, 
+      #{data_m678,jdbcType=VARCHAR}, #{data_m679,jdbcType=VARCHAR}, #{data_m680,jdbcType=VARCHAR}, 
+      #{data_m682,jdbcType=VARCHAR}, #{data_m683,jdbcType=VARCHAR}, #{data_m685,jdbcType=TIMESTAMP}, 
+      #{data_m686,jdbcType=TIMESTAMP}, #{data_m687,jdbcType=VARCHAR}, #{data_m688,jdbcType=VARCHAR}, 
+      #{data_m684,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wave.carRecord.bean.uts.ViewBpmFata28" >
+    insert into view_bpm_data_28
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="run_id != null" >
+        run_id,
+      </if>
+      <if test="run_name != null" >
+        run_name,
+      </if>
+      <if test="begin_user != null" >
+        begin_user,
+      </if>
+      <if test="begin_time != null" >
+        begin_time,
+      </if>
+      <if test="flow_auto_num != null" >
+        flow_auto_num,
+      </if>
+      <if test="flow_auto_num_year != null" >
+        flow_auto_num_year,
+      </if>
+      <if test="flow_auto_num_month != null" >
+        flow_auto_num_month,
+      </if>
+      <if test="data_m657 != null" >
+        data_m657,
+      </if>
+      <if test="data_m658 != null" >
+        data_m658,
+      </if>
+      <if test="data_m659 != null" >
+        data_m659,
+      </if>
+      <if test="data_m660 != null" >
+        data_m660,
+      </if>
+      <if test="data_m661 != null" >
+        data_m661,
+      </if>
+      <if test="data_m662 != null" >
+        data_m662,
+      </if>
+      <if test="data_m663 != null" >
+        data_m663,
+      </if>
+      <if test="data_m664 != null" >
+        data_m664,
+      </if>
+      <if test="data_m665 != null" >
+        data_m665,
+      </if>
+      <if test="data_m666 != null" >
+        data_m666,
+      </if>
+      <if test="data_m667 != null" >
+        data_m667,
+      </if>
+      <if test="data_m668 != null" >
+        data_m668,
+      </if>
+      <if test="data_m669 != null" >
+        data_m669,
+      </if>
+      <if test="data_m670 != null" >
+        data_m670,
+      </if>
+      <if test="data_m671 != null" >
+        data_m671,
+      </if>
+      <if test="data_m672 != null" >
+        data_m672,
+      </if>
+      <if test="data_m673 != null" >
+        data_m673,
+      </if>
+      <if test="data_m674 != null" >
+        data_m674,
+      </if>
+      <if test="data_m678 != null" >
+        data_m678,
+      </if>
+      <if test="data_m679 != null" >
+        data_m679,
+      </if>
+      <if test="data_m680 != null" >
+        data_m680,
+      </if>
+      <if test="data_m682 != null" >
+        data_m682,
+      </if>
+      <if test="data_m683 != null" >
+        data_m683,
+      </if>
+      <if test="data_m685 != null" >
+        data_m685,
+      </if>
+      <if test="data_m686 != null" >
+        data_m686,
+      </if>
+      <if test="data_m687 != null" >
+        data_m687,
+      </if>
+      <if test="data_m688 != null" >
+        data_m688,
+      </if>
+      <if test="data_m684 != null" >
+        data_m684,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="run_id != null" >
+        #{run_id,jdbcType=INTEGER},
+      </if>
+      <if test="run_name != null" >
+        #{run_name,jdbcType=VARCHAR},
+      </if>
+      <if test="begin_user != null" >
+        #{begin_user,jdbcType=VARCHAR},
+      </if>
+      <if test="begin_time != null" >
+        #{begin_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flow_auto_num != null" >
+        #{flow_auto_num,jdbcType=INTEGER},
+      </if>
+      <if test="flow_auto_num_year != null" >
+        #{flow_auto_num_year,jdbcType=INTEGER},
+      </if>
+      <if test="flow_auto_num_month != null" >
+        #{flow_auto_num_month,jdbcType=INTEGER},
+      </if>
+      <if test="data_m657 != null" >
+        #{data_m657,jdbcType=VARCHAR},
+      </if>
+      <if test="data_m658 != null" >
+        #{data_m658,jdbcType=VARCHAR},
+      </if>
+      <if test="data_m659 != null" >
+        #{data_m659,jdbcType=VARCHAR},
+      </if>
+      <if test="data_m660 != null" >
+        #{data_m660,jdbcType=VARCHAR},
+      </if>
+      <if test="data_m661 != null" >
+        #{data_m661,jdbcType=VARCHAR},
+      </if>
+      <if test="data_m662 != null" >
+        #{data_m662,jdbcType=VARCHAR},
+      </if>
+      <if test="data_m663 != null" >
+        #{data_m663,jdbcType=VARCHAR},
+      </if>
+      <if test="data_m664 != null" >
+        #{data_m664,jdbcType=VARCHAR},
+      </if>
+      <if test="data_m665 != null" >
+        #{data_m665,jdbcType=VARCHAR},
+      </if>
+      <if test="data_m666 != null" >
+        #{data_m666,jdbcType=VARCHAR},
+      </if>
+      <if test="data_m667 != null" >
+        #{data_m667,jdbcType=VARCHAR},
+      </if>
+      <if test="data_m668 != null" >
+        #{data_m668,jdbcType=VARCHAR},
+      </if>
+      <if test="data_m669 != null" >
+        #{data_m669,jdbcType=VARCHAR},
+      </if>
+      <if test="data_m670 != null" >
+        #{data_m670,jdbcType=VARCHAR},
+      </if>
+      <if test="data_m671 != null" >
+        #{data_m671,jdbcType=VARCHAR},
+      </if>
+      <if test="data_m672 != null" >
+        #{data_m672,jdbcType=VARCHAR},
+      </if>
+      <if test="data_m673 != null" >
+        #{data_m673,jdbcType=VARCHAR},
+      </if>
+      <if test="data_m674 != null" >
+        #{data_m674,jdbcType=VARCHAR},
+      </if>
+      <if test="data_m678 != null" >
+        #{data_m678,jdbcType=VARCHAR},
+      </if>
+      <if test="data_m679 != null" >
+        #{data_m679,jdbcType=VARCHAR},
+      </if>
+      <if test="data_m680 != null" >
+        #{data_m680,jdbcType=VARCHAR},
+      </if>
+      <if test="data_m682 != null" >
+        #{data_m682,jdbcType=VARCHAR},
+      </if>
+      <if test="data_m683 != null" >
+        #{data_m683,jdbcType=VARCHAR},
+      </if>
+      <if test="data_m685 != null" >
+        #{data_m685,jdbcType=TIMESTAMP},
+      </if>
+      <if test="data_m686 != null" >
+        #{data_m686,jdbcType=TIMESTAMP},
+      </if>
+      <if test="data_m687 != null" >
+        #{data_m687,jdbcType=VARCHAR},
+      </if>
+      <if test="data_m688 != null" >
+        #{data_m688,jdbcType=VARCHAR},
+      </if>
+      <if test="data_m684 != null" >
+        #{data_m684,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

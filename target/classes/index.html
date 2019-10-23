@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>车辆进出记录查询</title>
+
+<!--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">-->
+<!--<meta http-equiv="Content-Type" content="text/html; charset=GBK">-->
+<!--<meta http-equiv="Content-Type" content="text/html; charset=GB2312">-->
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<link rel="stylesheet" href="statics/css/bootstrap.min.css">
+<link rel="stylesheet" href="statics/css/font-awesome.min.css">
+<link rel="stylesheet" href="statics/plugins/jqgrid/ui.jqgrid-bootstrap.css">
+<link rel="stylesheet" href="statics/plugins/ztree/css/metroStyle/metroStyle.css">
+<link rel="stylesheet" href="statics/css/main.css">
+<script src="statics/libs/jquery.min.js"></script>
+<script src="statics/plugins/layer/layer.js"></script>
+<script src="statics/libs/bootstrap.min.js"></script>
+<script src="statics/libs/vue.min.js"></script>
+<script src="statics/plugins/jqgrid/grid.locale-cn.js"></script>
+<script src="statics/plugins/jqgrid/jquery.jqGrid.min.js"></script>
+<script src="statics/plugins/ztree/jquery.ztree.all.min.js"></script>
+<script src="statics/js/common.js"></script>
+	
+<script src="statics/plugins/ivview/gtag.js"></script>
+<link rel="stylesheet" href="statics/plugins/ivview/iview.css">
+<script src="statics/plugins/ivview/iview.min.js"></script>
+</head>
+<body>
+<div id="rrapp" v-cloak style=";margin: auto auto;width: 1000px;margin-top: 100px;">
+	<div style="color: #0;margin: auto auto;width: 200px;font-family:Arial,Helvetica,sans-serif;
+       font-size:2em;
+       vertical-align:middle;
+       font-weight:normal">车辆出入记录</div>
+	<div class="grid-btn" style="margin-top: 2em">
+		<div class="form-group col-sm-2" style="width: 20%">
+			<input id="validCode" type="password" class="form-control" v-model="q.validCode" @keyup.enter="query" placeholder="请输入密码">
+		</div>
+		<div class="form-group col-sm-2"style="width: 20%">
+			<input id="plate" type="text" class="form-control" v-model="q.plate" @keyup.enter="query" placeholder="请输入车牌号">
+		</div>
+		<a class="btn btn-default" @click="query" >查询</a>
+		<a class="btn btn-default" @click="clear" >清空</a>
+		<a class="btn btn-default" @click="exportAllExcel(1)">导出全部</a>
+		<a class="btn btn-default" @click="exportAllExcel(2)">导出当前页</a>
+		<div id="app" style="float: left;margin-right: 1em">
+			 <template>
+				 <date-picker v-model = "datePickerDefault" type="daterange" split-panels placeholder="选择起始日期" v-model="dateSelect.value" style="width: 200px" :options="dateSelect.timeOption" @on-change="changeDate" format="yyyy-MM-dd"></date-picker>
+			 </template>
+		 </div>
+	</div>
+	<div style="width: 100%;margin: auto auto;">
+		<table id="jqGrid"></table>
+		<div id="jqGridPager"></div>
+	</div>
+</div>
+
+<script src="statics/js/modules/index.js"></script>
+</body>
+</html>

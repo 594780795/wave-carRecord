@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wave.carRecord.dao.carGate.GaterecordMapper" >
+  <resultMap id="BaseResultMap" type="com.wave.carRecord.bean.carGate.Gaterecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="device" property="device" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="plate" property="plate" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="authentication" property="authentication" jdbcType="VARCHAR" />
+    <result column="timestamp" property="timestamp" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, device, code, name, plate, type, authentication, timestamp
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from gaterecord
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectSelective" resultMap="BaseResultMap" parameterType="com.wave.carRecord.common.GaterecordQueryDTO" >
+    select
+    <include refid="Base_Column_List" />
+    from gaterecord
+    <where>
+        AND `authentication` IN ('VISTER','CAR_WHITE')
+        <if test="id != null" >
+          and id = #{id,jdbcType=INTEGER}
+        </if>
+        <if test="device != null" >
+          and device = #{device,jdbcType=VARCHAR}
+        </if>
+        <if test="code != null" >
+          and code = #{code,jdbcType=VARCHAR}
+        </if>
+        <if test="name != null" >
+          and name = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="plate != null" >
+          and plate = #{plate,jdbcType=VARCHAR}
+        </if>
+        <if test="type != null" >
+          and type = #{type,jdbcType=VARCHAR}
+        </if>
+        <if test="authentication != null" >
+          and authentication = #{authentication,jdbcType=VARCHAR}
+        </if>
+        <if test="timestamp != null" >
+          and timestamp = #{timestamp,jdbcType=TIMESTAMP}
+        </if>
+      <if test="startDate != null" >
+        and timestamp <![CDATA[>=]]> #{startDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="endDate != null" >
+        and timestamp <![CDATA[<=]]> #{endDate,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </select>
+  <select id="selectPageSelective" resultMap="BaseResultMap" parameterType="com.wave.carRecord.common.GaterecordQueryDTO" >
+    select
+    <include refid="Base_Column_List" />
+    from gaterecord
+    <where>
+      AND `authentication` IN ('VISTER','CAR_WHITE')
+      <if test="id != null" >
+        and id = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="device != null" >
+        and device = #{device,jdbcType=VARCHAR}
+      </if>
+      <if test="code != null" >
+        and code = #{code,jdbcType=VARCHAR}
+      </if>
+      <if test="name != null" >
+        and name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="plate != null" >
+        and plate = #{plate,jdbcType=VARCHAR}
+      </if>
+      <if test="type != null" >
+        and type = #{type,jdbcType=VARCHAR}
+      </if>
+      <if test="authentication != null" >
+        and authentication = #{authentication,jdbcType=VARCHAR}
+      </if>
+      <if test="timestamp != null" >
+        and timestamp = #{timestamp,jdbcType=TIMESTAMP}
+      </if>
+      <if test="startDate != null" >
+        and timestamp <![CDATA[>=]]> #{startDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="endDate != null" >
+        and timestamp <![CDATA[<=]]> #{endDate,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+    order by timestamp desc
+    limit #{pageNumber},#{pageSize}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from gaterecord
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wave.carRecord.bean.carGate.Gaterecord" >
+    insert into gaterecord (id, device, code, 
+      name, plate, type, 
+      authentication, timestamp)
+    values (#{id,jdbcType=INTEGER}, #{device,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{plate,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{authentication,jdbcType=VARCHAR}, #{timestamp,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wave.carRecord.bean.carGate.Gaterecord" >
+    insert into gaterecord
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="device != null" >
+        device,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="plate != null" >
+        plate,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="authentication != null" >
+        authentication,
+      </if>
+      <if test="timestamp != null" >
+        timestamp,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="device != null" >
+        #{device,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="plate != null" >
+        #{plate,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="authentication != null" >
+        #{authentication,jdbcType=VARCHAR},
+      </if>
+      <if test="timestamp != null" >
+        #{timestamp,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wave.carRecord.bean.carGate.Gaterecord" >
+    update gaterecord
+    <set >
+      <if test="device != null" >
+        device = #{device,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="plate != null" >
+        plate = #{plate,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="authentication != null" >
+        authentication = #{authentication,jdbcType=VARCHAR},
+      </if>
+      <if test="timestamp != null" >
+        timestamp = #{timestamp,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wave.carRecord.bean.carGate.Gaterecord" >
+    update gaterecord
+    set device = #{device,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      plate = #{plate,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      authentication = #{authentication,jdbcType=VARCHAR},
+      timestamp = #{timestamp,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
