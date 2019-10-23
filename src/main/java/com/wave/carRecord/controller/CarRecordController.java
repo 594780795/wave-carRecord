@@ -6,6 +6,7 @@ import com.wave.carRecord.service.GaterecordService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ import java.util.Map;
  * @description: 车辆记录
  * @date 2019/10/2016:31
  */
-@RestController
+@Component
 @RequestMapping("car")
 public class CarRecordController {
     
@@ -29,6 +30,7 @@ public class CarRecordController {
     @Autowired
     GaterecordService gaterecordService;
     
+    @ResponseBody
     @RequestMapping(value = "queryCarRecord", method = RequestMethod.POST)
     public ObjectResult<GaterecordResponse> queryCarRecord (@RequestBody QueryRequest req) {
         logger.info("car record params: " + JSON.toJSONString(req));
@@ -42,9 +44,9 @@ public class CarRecordController {
         return result;
     }
     
-    @PostMapping("excel")
+    @RequestMapping(value = "excel", method = RequestMethod.POST)
     public void excel(@RequestBody QueryRequest queryRequest, HttpServletResponse response) {
-        System.out.println("car/excel params:" + JSON.toJSONString(queryRequest));
+        logger.info("car/excel params:", JSON.toJSONString(queryRequest));
         try{
             gaterecordService.exportCarRecordExcel(queryRequest, response);
         } catch (Exception e) {

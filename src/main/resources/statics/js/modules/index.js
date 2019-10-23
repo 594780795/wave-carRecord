@@ -17,28 +17,29 @@ var vm = new Vue({
     },
     methods: {
         query: function () {
-            console.log("query")
+            if (vm.q.validCode == null || vm.q.validCode == '') {
+                //提示层
+                layer.msg('请输入密码', {
+                    icon: 7,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+                return;
+            }
             vm.isLoad = true; 
             vm.reload();
         },
         reload: function () {
-            console.log("reload")
             this.$Loading.start();
-            $("#jqGrid").trigger("reloadGrid");
+            $('#jqGrid').jqGrid('setGridParam', {url: baseURL + 'car/queryCarRecord'}).trigger('reloadGrid');
             this.$Loading.finish();
         },
         clear: function () {
-            console.log("clear")
             vm.dateSelect.startDate = null,
             vm.dateSelect.endDate = null, 
             vm.datePickerDefault = null,
-            vm.q.plate = '',
-            vm.q.validCode = ''
+            vm.q.plate = ''
         },
         changeDate: function (daterange) {
-            console.log("change");
-            console.log(daterange)
-            
             if (daterange != null) {
                 vm.dateSelect.startDate = daterange[0];
                 vm.dateSelect.endDate = daterange[1];
@@ -46,7 +47,6 @@ var vm = new Vue({
             }
         },
         export: function(exportType){
-            console.log("export");
             console.log(Date());
             var oReq = new XMLHttpRequest();
             oReq.open("POST", baseURL + "car/excel", true);
@@ -83,44 +83,54 @@ var vm = new Vue({
                 }));
         },
         exportAllExcel: function(exportType) {
-            console.log("exportAllExcel")
-            if (exportType == 1) {
-                var content = '';
-                if (vm.dateSelect.total > 4000) {
-                    content = '即将导出' + vm.dateSelect.total + '条记录，可能耗时1到5分钟。点击确认后，开始在后台下载，请耐心等待';
-                } else {
-                    content = '即将导出' + vm.dateSelect.total + '条记录，可能耗时1到60秒。点击确认后，开始在后台下载，请耐心等待';;
-                }
-                //导出全部
-                layer.open({
-                    type: 0,
-                    title:'导出确认',
-                    area: [300 , 300],
-                    fixed: false, //不固定
-                    maxmin: true,
-                    content: content,
-                    btn: ['确定', '取消'], //按钮组
-                    scrollbar: false ,//屏蔽浏览器滚动条
-                    yes: function(index){//layer.msg('yes');    //点击确定回调
-                        layer.close(index);
-                        vm.export(exportType);
-                    },
-                    btn2: function(){//layer.alert('aaa',{title:'msg title'});  ////点击取消回调
-                        layer.close();
-                    }
+            if (vm.dateSelect.total == 0) {
+                //提示层
+                layer.msg('无数据可以导出', {
+                    icon: 7,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
                 });
-            } else if (exportType == 2) {
-                vm.export(exportType);
+                return;
             }
+            if (vm.q.validCode == null || vm.q.validCode == '') {
+                //提示层
+                layer.msg('请输入密码', {
+                    icon: 7,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+                return;
+            }
+            var content = '';
+            if (vm.dateSelect.startDate == null || vm.dateSelect.startDate == '' || vm.dateSelect.endDate == '' || vm.dateSelect.endDate == '') {
+                content = '即将导出' + vm.dateSelect.total + '条记录，可能耗时1到2分钟。点击确认后，开始在后台生成表格，请耐心等待下载框弹出';
+            } else {
+                content = '即将导出' + $("#jqGrid").jqGrid('getGridParam','rowNum') + '条记录。点击确认后，开始在后台生成表格，请耐心等待下载框弹出';;
+            }
+            //导出全部
+            layer.open({
+                type: 0,
+                title:'导出确认',
+                area: [300 , 300],
+                fixed: false, //不固定
+                maxmin: true,
+                content: content,
+                btn: ['确定', '取消'], //按钮组
+                scrollbar: false ,//屏蔽浏览器滚动条
+                yes: function(index){//layer.msg('yes');    //点击确定回调
+                    layer.close(index);
+                    vm.export(exportType);
+                },
+                btn2: function(){//layer.alert('aaa',{title:'msg title'});  ////点击取消回调
+                    layer.close();
+                }
+            });
         },
     },
 });
 
 $("#jqGrid").jqGrid({
     // url: baseURL + 'car/queryCarRecord',
-    url: baseURL + 'car/queryCarRecord',
+    url: '',
     datatype: "json",
-    // datatype:"local",
     mtype: "POST",
     ajaxGridOptions: { contentType: 'application/json;charset=utf-8'},
     colModel: [
@@ -128,8 +138,8 @@ $("#jqGrid").jqGrid({
         // { label: '设备', name: 'device', index: "device", width: 75, sortable: false , hidden: true},
         { label: '车主姓名', name: 'name', index: "name", sortable: false, width: 75 , sortable: false , align: "center"},
         { label: '车牌号', name: 'plate', index: "plate", width: 90 , sortable: false, align: "center" },
-        { label: '出入口', name: 'type', index: "type", width: 100 , sortable: false, align: "center" },
-        { label: '授权方式', name: 'authentication', index: "authentication", width: 100, sortable: false  , align: "center"},
+        // { label: '出入口', name: 'type', index: "type", width: 100 , sortable: false, align: "center" },
+        // { label: '授权方式', name: 'authentication', index: "authentication", width: 100, sortable: false  , align: "center"},
         // { label: 'authentication', name: 'status', width: 60, formatter: function(value, options, row){
         // 	return value === 0 ? 
         // 		'<span class="label label-danger">禁用</span>' : 
@@ -138,10 +148,10 @@ $("#jqGrid").jqGrid({
         { label: '时间', name: 'timestamp', index: "timestamp", sortable: false , align: "center"}
     ],
     viewrecords: true,
-    height: 385,
-    rowNum: 10,
-    rowList : [10,30,50],
-    rownumbers: false,
+    height: 555,
+    rowNum: 15,
+    rowList : [15,30,50],
+    rownumbers: true,
     rownumWidth: 25,
     autowidth: true,
     multiselect: false,
@@ -169,7 +179,6 @@ $("#jqGrid").jqGrid({
         }
     },
     beforeRequest: function(){
-        console.log("beforeRequest")
         var page = $("#jqGrid").jqGrid('getGridParam','page');
         var data = {
             'search': null,
@@ -182,7 +191,6 @@ $("#jqGrid").jqGrid({
             "endDate": vm.dateSelect.endDate,
             "validCode": vm.q.validCode
         };
-        console.log(data)
 
         $("#jqGrid").jqGrid('setGridParam',{
             postData: JSON.stringify(data),
@@ -240,7 +248,6 @@ function getLastMonthFormatDate(){
  * @returns {string}
  */
 function getCurrentFormatDate(){
-    console.log("getCurrentFormatDate")
     var nowDate = new Date();
     var year = nowDate.getFullYear();
     var month = nowDate.getMonth() + 1  < 10 ? "0" + (nowDate.getMonth() + 1) : nowDate.getMonth() + 1;

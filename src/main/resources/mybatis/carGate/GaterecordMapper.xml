@@ -95,7 +95,7 @@
         and timestamp <![CDATA[<=]]> #{endDate,jdbcType=TIMESTAMP}
       </if>
     </where>
-    order by timestamp desc
+    order by id desc
     limit #{pageNumber},#{pageSize}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
