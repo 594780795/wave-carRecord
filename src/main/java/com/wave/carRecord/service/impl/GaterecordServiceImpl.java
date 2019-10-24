@@ -278,8 +278,6 @@ public class GaterecordServiceImpl implements GaterecordService {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             //将wb写入流
             wb.write(byteArrayOutputStream);
-    
-            down(byteArrayOutputStream);
             
             //3. 返回excel文件
             downloadUtil.download(byteArrayOutputStream, response, "出入记录");

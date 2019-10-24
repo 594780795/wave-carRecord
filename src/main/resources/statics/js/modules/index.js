@@ -100,11 +100,16 @@ var vm = new Vue({
                 return;
             }
             var content = '';
-            if (vm.dateSelect.startDate == null || vm.dateSelect.startDate == '' || vm.dateSelect.endDate == '' || vm.dateSelect.endDate == '') {
-                content = '即将导出' + vm.dateSelect.total + '条记录，可能耗时1到2分钟。点击确认后，开始在后台生成表格，请耐心等待下载框弹出';
+            if (exportType == 1) {
+                if (vm.dateSelect.startDate == null || vm.dateSelect.startDate == '' || vm.dateSelect.endDate == '' || vm.dateSelect.endDate == '') {
+                    content = '即将导出' + vm.dateSelect.total + '条记录，可能耗时1到2分钟。点击确认后，开始在后台生成表格，请耐心等待下载框弹出';
+                } else {
+                    content = '即将导出' + vm.dateSelect.total + '条记录。点击确认后，开始在后台生成表格，请耐心等待下载框弹出';;
+                }
             } else {
                 content = '即将导出' + $("#jqGrid").jqGrid('getGridParam','rowNum') + '条记录。点击确认后，开始在后台生成表格，请耐心等待下载框弹出';;
             }
+            
             //导出全部
             layer.open({
                 type: 0,
