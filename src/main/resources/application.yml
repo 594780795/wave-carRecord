@@ -6,6 +6,9 @@ server:
 
 
 logging:
+  config: classpath:log/logback.xml
+  path: C:\\Users\\Administrator\\Desktop\\test\\logs
+#  path: /data/logs/wave-apartment/user-service
   level:
     com:
       wave:

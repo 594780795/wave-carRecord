@@ -3,6 +3,8 @@ package com.wave.carRecord.controller;
 import com.alibaba.fastjson.JSON;
 import com.wave.carRecord.common.*;
 import com.wave.carRecord.service.GaterecordService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -22,24 +24,32 @@ import java.util.Map;
 @RequestMapping("car")
 public class CarRecordController {
     
+    private final Logger logger = LoggerFactory.getLogger(CarRecordController.class);
+    
     @Autowired
     GaterecordService gaterecordService;
     
     @RequestMapping(value = "queryCarRecord", method = RequestMethod.POST)
     public ObjectResult<GaterecordResponse> queryCarRecord (@RequestBody QueryRequest req) {
-        System.out.println("car record params: " + JSON.toJSONString(req));
+        logger.info("car record params: " + JSON.toJSONString(req));
         ObjectResult<GaterecordResponse> result = null;
         try{
             result = gaterecordService.queryCarRecord(req);
         } catch (Exception e) {
             e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
         return result;
     }
     
     @PostMapping("excel")
-    public void excel(@RequestBody QueryRequest queryRequest, HttpServletResponse response) throws Exception {
+    public void excel(@RequestBody QueryRequest queryRequest, HttpServletResponse response) {
         System.out.println("car/excel params:" + JSON.toJSONString(queryRequest));
-        gaterecordService.exportCarRecordExcel(queryRequest, response);
+        try{
+            gaterecordService.exportCarRecordExcel(queryRequest, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage(), e);
+        }
     }
 }
